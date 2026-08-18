@@ -1,7 +1,8 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ISSUES } from "../data/issues";
 import { Wordmark } from "../components/Wordmark";
+import { MailerLiteForm } from "../components/MailerLiteForm";
 
 // theoffscript.page/issue/002 (etc).
 //
@@ -105,7 +106,7 @@ function IssueNav({ issue }: { issue: (typeof ISSUES)[number] }) {
           <Wordmark />
         </Link>
         <div className="flex items-center gap-4 sm:gap-6 min-w-0">
-          <Link to="/about" className="text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition-colors whitespace-nowrap">
+          <Link to="/about" className="hidden sm:block text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition-colors whitespace-nowrap">
             About
           </Link>
           <Link to="/archive" className="text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition-colors whitespace-nowrap">
@@ -115,7 +116,7 @@ function IssueNav({ issue }: { issue: (typeof ISSUES)[number] }) {
             href={issue.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`${hasFullStory ? "hidden md:inline-block" : "inline-block"} text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition-colors whitespace-nowrap`}
+            className="text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition-colors whitespace-nowrap"
           >
             Open ↗
           </a>
@@ -133,6 +134,7 @@ function formatDate(iso: string) {
 function FullStoryPage({ issue }: { issue: (typeof ISSUES)[number] }) {
   const [showOriginal, setShowOriginal] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   if (showOriginal) {
     return (
@@ -150,7 +152,7 @@ function FullStoryPage({ issue }: { issue: (typeof ISSUES)[number] }) {
           </div>
         </div>
         <div className="relative flex-1 min-h-0">
-          {!loaded && (
+          {!loaded && !failed && (
             <div className="absolute inset-0 flex items-center justify-center bg-black">
               <div className="flex flex-col items-center gap-3 text-neutral-500">
                 <div className="h-6 w-6 rounded-full border-2 border-neutral-700 border-t-[var(--brand-blue)] animate-spin" />
@@ -158,13 +160,30 @@ function FullStoryPage({ issue }: { issue: (typeof ISSUES)[number] }) {
               </div>
             </div>
           )}
-          <iframe
-            key={issue.url}
-            src={issue.url}
-            title={`The OffScript Issue ${issue.number}, full email`}
-            className="h-full w-full border-0 bg-white"
-            onLoad={() => setLoaded(true)}
-          />
+          {failed ? (
+            <div className="absolute inset-0 flex items-center justify-center bg-black px-6">
+              <div className="text-center">
+                <p className="text-neutral-400 text-sm mb-4">Your browser blocked the preview.</p>
+                <a
+                  href={issue.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand-blue)] text-white px-6 h-12 text-sm font-bold hover:opacity-90 transition-opacity"
+                >
+                  Open issue in new tab ↗
+                </a>
+              </div>
+            </div>
+          ) : (
+            <iframe
+              key={issue.url}
+              src={issue.url}
+              title={`The OffScript Issue ${issue.number}, full email`}
+              className="h-full w-full border-0 bg-white"
+              onLoad={() => setLoaded(true)}
+              onError={() => setFailed(true)}
+            />
+          )}
         </div>
       </div>
     );
@@ -224,6 +243,11 @@ function FullStoryPage({ issue }: { issue: (typeof ISSUES)[number] }) {
             <span className="transition-transform">↓</span>
           </button>
         </div>
+
+        <div className="mt-14 border-t border-white/10 pt-10">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500 mb-4">Get the next one free</p>
+          <MailerLiteForm />
+        </div>
       </main>
     </div>
   );
@@ -231,12 +255,13 @@ function FullStoryPage({ issue }: { issue: (typeof ISSUES)[number] }) {
 
 function EmbedOnlyPage({ issue }: { issue: (typeof ISSUES)[number] }) {
   const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   return (
     <div className="h-screen flex flex-col bg-black text-white font-sans antialiased">
       <IssueNav issue={issue} />
       <div className="relative flex-1 min-h-0">
-        {!loaded && (
+        {!loaded && !failed && (
           <div className="absolute inset-0 flex items-center justify-center bg-black">
             <div className="flex flex-col items-center gap-3 text-neutral-500">
               <div className="h-6 w-6 rounded-full border-2 border-neutral-700 border-t-[var(--brand-blue)] animate-spin" />
@@ -244,13 +269,30 @@ function EmbedOnlyPage({ issue }: { issue: (typeof ISSUES)[number] }) {
             </div>
           </div>
         )}
-        <iframe
-          key={issue.url}
-          src={issue.url}
-          title={`The OffScript Issue ${issue.number}`}
-          className="h-full w-full border-0 bg-white"
-          onLoad={() => setLoaded(true)}
-        />
+        {failed ? (
+          <div className="absolute inset-0 flex items-center justify-center bg-black px-6">
+            <div className="text-center">
+              <p className="text-neutral-400 text-sm mb-4">Your browser blocked the preview.</p>
+              <a
+                href={issue.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand-blue)] text-white px-6 h-12 text-sm font-bold hover:opacity-90 transition-opacity"
+              >
+                Open issue in new tab ↗
+              </a>
+            </div>
+          </div>
+        ) : (
+          <iframe
+            key={issue.url}
+            src={issue.url}
+            title={`The OffScript Issue ${issue.number}`}
+            className="h-full w-full border-0 bg-white"
+            onLoad={() => setLoaded(true)}
+            onError={() => setFailed(true)}
+          />
+        )}
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { type MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 import { CURRENT_ISSUE } from "../data/issues";
 import { Wordmark } from "../components/Wordmark";
+import { MailerLiteForm } from "../components/MailerLiteForm";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -19,6 +20,7 @@ export const Route = createFileRoute("/")({
         "url": "https://aishaonola.me"
       },
       "sameAs": [
+        "https://check.theoffscript.page",
         "https://instagram.com/theoffscriptfm",
         "https://x.com/theoffscriptfm",
         "https://linkedin.com/company/theoffscriptfm"
@@ -232,6 +234,7 @@ function Header() {
           <Link to="/latest" className="text-sm font-medium text-neutral-400 hover:text-white transition-colors">Latest issue</Link>
           <Link to="/archive" className="text-sm font-medium text-neutral-400 hover:text-white transition-colors">Archive</Link>
           <Link to="/about" className="text-sm font-medium text-neutral-400 hover:text-white transition-colors">About</Link>
+          <a href="https://check.theoffscript.page" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-[var(--brand-orange)] hover:opacity-80 transition-opacity whitespace-nowrap">Take the Dossier →</a>
         </div>
 
         <div className="flex items-center gap-3 sm:gap-4 shrink-0">
@@ -284,6 +287,7 @@ function Header() {
           <a href="#how" onClick={() => setMenuOpen(false)} className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">The format</a>
           <Link to="/latest" onClick={() => setMenuOpen(false)} className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">Latest issue</Link>
           <Link to="/about" onClick={() => setMenuOpen(false)} className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">About</Link>
+          <a href="https://check.theoffscript.page" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-[var(--brand-orange)] hover:opacity-80 transition-opacity">Take the Dossier →</a>
         </div>
       )}
     </header>
@@ -702,15 +706,7 @@ function JoinBanner() {
         </Reveal>
 
         <Reveal delayMs={120} className="border border-white/10 bg-black/30 rounded-2xl p-4 shadow-xl">
-          <iframe
-            src="https://preview.mailerlite.io/forms/2329743/187800923568866888/share"
-            width="100%"
-            height="400"
-            className="border-0 w-full rounded relative z-10 bg-transparent"
-            style={{ minHeight: "360px" }}
-            title="The OffScript Subscription Form"
-            loading="lazy"
-          />
+          <MailerLiteForm />
         </Reveal>
       </div>
     </section>
@@ -728,10 +724,10 @@ function Footer() {
           <p className="mt-2 text-xs text-neutral-400 max-w-xs leading-relaxed">
             {COPY.footerDesc}
           </p>
-          <p className="mt-2 text-[11px] text-neutral-600">Awoyejo Str. Lagos</p>
+          <p className="mt-2 text-[11px] text-neutral-600">Lagos, Nigeria</p>
           <div className="mt-4 flex justify-center md:justify-start gap-4">
-            <a href="/archive" className="text-xs text-neutral-500 hover:text-[var(--brand-blue)] transition-colors">
-              Archive
+            <a href="https://check.theoffscript.page" target="_blank" rel="noopener noreferrer" className="text-xs text-neutral-500 hover:text-[var(--brand-blue)] transition-colors">
+              Take the Dossier
             </a>
             {SOCIALS.map((social) => (
               <a
