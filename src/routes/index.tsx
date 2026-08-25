@@ -132,7 +132,7 @@ const TRANSLATIONS = [
   {
     tag: "Politics",
     raw: "National Assembly moves to amend the Electoral Act ahead of the next general elections.",
-    clear: "Lawmakers are rewriting the election rules again — here's what changes for you as a voter.",
+    clear: "Lawmakers are rewriting the election rules again, here's what changes for you as a voter.",
   },
   {
     tag: "Policy",
@@ -715,37 +715,72 @@ function JoinBanner() {
 
 function Footer() {
   return (
-    <footer className="bg-black text-white border-t border-white/10 relative z-10">
-      <div className="mx-auto max-w-6xl px-6 py-12 flex flex-col md:flex-row items-center md:justify-between gap-6 text-center md:text-left">
-        <div>
-          <div className="text-xl tracking-tight" style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}>
-            <Wordmark />
-          </div>
-          <p className="mt-2 text-xs text-neutral-400 max-w-xs leading-relaxed">
-            {COPY.footerDesc}
-          </p>
-          <p className="mt-2 text-[11px] text-neutral-600">Lagos, Nigeria</p>
-          <div className="mt-4 flex justify-center md:justify-start gap-4">
-            <a href="https://check.theoffscript.page" target="_blank" rel="noopener noreferrer" className="text-xs text-neutral-500 hover:text-[var(--brand-blue)] transition-colors">
-              Take the Dossier
+    <footer className="bg-[var(--brand-cream)] text-neutral-900 border-t border-black/10 relative z-10">
+      <div className="mx-auto max-w-6xl px-6 py-12 sm:py-16">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-[1.5fr_1fr_1fr_1fr] md:gap-8">
+          <div className="col-span-2 max-w-sm md:col-span-1">
+            <div className="text-xl tracking-tight" style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}>
+              <Wordmark />
+            </div>
+            <p className="mt-4 text-sm leading-relaxed text-neutral-600">
+              {COPY.footerDesc}
+            </p>
+            <a
+              href="mailto:hello@theoffscript.page"
+              className="mt-5 inline-flex text-sm font-semibold text-neutral-900 underline decoration-black/20 underline-offset-4 transition-colors hover:text-[var(--brand-orange)] hover:decoration-[var(--brand-orange)]"
+            >
+              hello@theoffscript.page
             </a>
-            {SOCIALS.map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-neutral-500 hover:text-[var(--brand-blue)] transition-colors"
-              >
-                {social.label}
-              </a>
-            ))}
+          </div>
+
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--brand-orange)]" style={{ fontFamily: "var(--font-mono)" }}>
+              Explore
+            </p>
+            <nav className="mt-5 flex flex-col items-start gap-3" aria-label="Explore">
+              <a href="#guide" className="text-sm text-neutral-600 transition-colors hover:text-black">What's inside</a>
+              <a href="#how" className="text-sm text-neutral-600 transition-colors hover:text-black">The format</a>
+              <Link to="/latest" className="text-sm text-neutral-600 transition-colors hover:text-black">Latest issue</Link>
+              <Link to="/archive" className="text-sm text-neutral-600 transition-colors hover:text-black">Archive</Link>
+            </nav>
+          </div>
+
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--brand-orange)]" style={{ fontFamily: "var(--font-mono)" }}>
+              The newsroom
+            </p>
+            <nav className="mt-5 flex flex-col items-start gap-3" aria-label="The newsroom">
+              <Link to="/about" className="text-sm text-neutral-600 transition-colors hover:text-black">About The OffScript</Link>
+              <a href="https://aishaonola.me" target="_blank" rel="noopener noreferrer" className="text-sm text-neutral-600 transition-colors hover:text-black">Meet Aisha</a>
+              <a href="https://check.theoffscript.page" target="_blank" rel="noopener noreferrer" className="text-sm text-neutral-600 transition-colors hover:text-black">Take the Dossier</a>
+              <a href="/#join" onClick={scrollToForm} className="text-sm text-neutral-600 transition-colors hover:text-black">Join the list</a>
+            </nav>
+          </div>
+
+          <div className="col-span-2 md:col-span-1">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--brand-orange)]" style={{ fontFamily: "var(--font-mono)" }}>
+              Follow along
+            </p>
+            <nav className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 md:flex md:flex-col" aria-label="Social links">
+              {SOCIALS.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-neutral-600 transition-colors hover:text-black"
+                >
+                  {social.label}
+                </a>
+              ))}
+              <a href="mailto:hello@theoffscript.page" className="text-sm text-neutral-600 transition-colors hover:text-black">Email us</a>
+            </nav>
           </div>
         </div>
 
-        <div className="flex flex-col md:items-end gap-2 text-[11px] text-neutral-500">
-          <p>© {new Date().getFullYear()} The OffScript. Tailored for the curious Nigerian.</p>
-          <p className="uppercase tracking-[0.2em] text-neutral-600">Lagos · Worldwide</p>
+        <div className="mt-12 flex flex-col gap-3 border-t border-black/10 pt-5 text-[11px] text-neutral-500 sm:flex-row sm:items-center sm:justify-between">
+          <p className="max-w-xs leading-relaxed">© {new Date().getFullYear()} The OffScript. Tailored for the curious Nigerian.</p>
+          <p className="uppercase tracking-[0.2em] text-neutral-500">Lagos · Worldwide</p>
         </div>
       </div>
     </footer>
@@ -797,7 +832,7 @@ function StickyMobileCta() {
         onClick={scrollToForm}
         className="flex items-center justify-center gap-2 rounded-xl bg-[var(--brand-blue)] text-white w-full h-12 text-sm font-bold active:scale-[0.98] transition-transform"
       >
-        {COPY.ctaPrimary} — takes 10 seconds
+        {COPY.ctaPrimary}, takes 10 seconds
         <span aria-hidden>→</span>
       </a>
     </div>

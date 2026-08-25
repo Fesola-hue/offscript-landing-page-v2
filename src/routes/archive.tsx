@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { Search, X } from "lucide-react";
+import { useState } from "react";
 import { ISSUES } from "../data/issues";
 import { Wordmark } from "../components/Wordmark";
 
@@ -50,6 +52,22 @@ export const Route = createFileRoute('/archive')({
 });
 
 function ArchivePage() {
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const normalizedQuery = searchQuery.trim().toLowerCase().replace(/\bisuue\b/g, "issue");
+  const issueNumberQuery = normalizedQuery.match(/^(?:issue|week)\s*0*(\d+)$/)?.[1];
+  const filteredIssues = ISSUES.filter((issue) => {
+    if (!normalizedQuery) return true;
+    if (issueNumberQuery && Number(issue.number) === Number(issueNumberQuery)) return true;
+
+    return [
+      issue.number,
+      issue.week,
+      `issue ${issue.number}`,
+      issue.featureStory.headline,
+    ].join(" ").toLowerCase().includes(normalizedQuery);
+  });
+
   return (
     <div className="min-h-screen bg-black text-white font-sans antialiased selection:bg-[var(--brand-blue)] selection:text-white">
       <header className="border-b border-white/10">
@@ -75,18 +93,58 @@ function ArchivePage() {
         >
           Every issue
         </span>
-        <h1
-          className="mt-3 text-3xl sm:text-4xl md:text-5xl tracking-tight text-white"
-          style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}
-        >
-          The Archive.
-        </h1>
+        <div className="mt-3 flex items-start justify-between gap-4">
+          <h1
+            className="text-3xl sm:text-4xl md:text-5xl tracking-tight text-white"
+            style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}
+          >
+            The Archive.
+          </h1>
+          <button
+            type="button"
+            onClick={() => setSearchOpen((open) => !open)}
+            aria-label={searchOpen ? "Close archive search" : "Search the archive"}
+            aria-expanded={searchOpen}
+            aria-controls="archive-search"
+            className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 text-neutral-400 transition-colors hover:border-white/25 hover:text-white"
+          >
+            {searchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
+          </button>
+        </div>
         <p className="mt-3 text-sm sm:text-base text-neutral-400 max-w-lg">
           Every issue of The OffScript, newest first. Missed a Friday? Catch up here.
         </p>
 
+        {searchOpen && (
+          <div id="archive-search" className="mt-6">
+            <label htmlFor="archive-search-input" className="sr-only">Search the archive</label>
+            <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-neutral-950 px-4 focus-within:border-white/25">
+              <Search className="h-4 w-4 shrink-0 text-neutral-500" aria-hidden="true" />
+              <input
+                id="archive-search-input"
+                type="search"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder="Search by issue, week, or headline"
+                autoFocus
+                className="h-12 min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-neutral-600"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery("")}
+                  aria-label="Clear archive search"
+                  className="text-neutral-500 transition-colors hover:text-white"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
         <div className="mt-10 sm:mt-12 flex flex-col gap-10 sm:gap-14">
-          {ISSUES.map((issue, i) => {
+          {filteredIssues.map((issue, i) => {
             const dateLabel = issue.datePublished
               ? new Date(`${issue.datePublished}T00:00:00Z`).toLocaleDateString("en-US", {
                   year: "numeric",
@@ -123,7 +181,7 @@ function ArchivePage() {
                       >
                         Issue {issue.number}
                       </span>
-                      {i === 0 && (
+                      {issue.number === ISSUES[0].number && (
                         <span className="text-[10px] font-bold uppercase tracking-wide text-[var(--brand-orange)] bg-black/40 backdrop-blur-sm px-2 py-1 rounded-md">
                           Latest
                         </span>
@@ -150,6 +208,9 @@ function ArchivePage() {
               </Link>
             );
           })}
+          {filteredIssues.length === 0 && (
+            <p className="text-sm text-neutral-500">No issues found. Try a week, issue number, or headline fragment.</p>
+          )}
         </div>
       </main>
 

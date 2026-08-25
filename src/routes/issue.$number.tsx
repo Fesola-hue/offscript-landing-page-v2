@@ -112,14 +112,16 @@ function IssueNav({ issue }: { issue: (typeof ISSUES)[number] }) {
           <Link to="/archive" className="text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition-colors whitespace-nowrap">
             ← Archive
           </Link>
-          <a
-            href={issue.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition-colors whitespace-nowrap"
-          >
-            Open ↗
-          </a>
+          {issue.url && (
+            <a
+              href={issue.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition-colors whitespace-nowrap"
+            >
+              Open ↗
+            </a>
+          )}
         </div>
       </nav>
     </header>
@@ -231,17 +233,36 @@ function FullStoryPage({ issue }: { issue: (typeof ISSUES)[number] }) {
         </div>
 
         <div className="mt-14 border-t border-white/10 pt-8">
-          <p className="text-sm text-neutral-400">
-            This is one story from Issue {issue.number}. The full weekly email covers a few
-            more, plus a playlist to match the mood.
-          </p>
-          <button
-            onClick={() => setShowOriginal(true)}
-            className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand-blue)] hover:opacity-80 transition-opacity"
-          >
-            Read the full issue as it was emailed
-            <span className="transition-transform">↓</span>
-          </button>
+          {issue.url ? (
+            <>
+              <p className="text-sm text-neutral-400">
+                This is one story from Issue {issue.number}. The full weekly email covers a few
+                more, plus a playlist to match the mood.
+              </p>
+              <button
+                onClick={() => setShowOriginal(true)}
+                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand-blue)] hover:opacity-80 transition-opacity"
+              >
+                Read the full issue as it was emailed
+                <span className="transition-transform">↓</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="text-sm text-neutral-400">
+                That's the headline story from this issue. Each week there's more, government, money, culture, a playlist, the works.
+              </p>
+              <p className="mt-3 text-sm text-neutral-400">
+                Catch up on a previous one while you wait for the next.
+              </p>
+              <Link
+                to="/archive"
+                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand-blue)] hover:opacity-80 transition-opacity"
+              >
+                Browse all issues →
+              </Link>
+            </>
+          )}
         </div>
 
         <div className="mt-14 border-t border-white/10 pt-10">
