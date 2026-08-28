@@ -1,4 +1,4 @@
-// The site wordmark: logo mark + "Theoffscript." text, in one place so
+// The site wordmark: logo mark + "The OffScript." text, in one place so
 // every nav bar and the footer stay in sync. Change the mark or the
 // text here and it updates everywhere it's used.
 export function Wordmark({ className = "" }: { className?: string }) {
@@ -19,7 +19,7 @@ export function Wordmark({ className = "" }: { className?: string }) {
         />
       </svg>
       <span>
-        Theoffscript<span style={{ color: "var(--brand-blue)" }}>.</span>
+        The OffScript<span style={{ color: "var(--brand-blue)" }}>.</span>
       </span>
     </span>
   );

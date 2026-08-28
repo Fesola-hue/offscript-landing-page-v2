@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { type MouseEvent, useCallback, useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { CURRENT_ISSUE } from "../data/issues";
 import { Wordmark } from "../components/Wordmark";
 import { MailerLiteForm } from "../components/MailerLiteForm";
@@ -107,8 +108,7 @@ const COPY = {
 const SECTION_GUIDE = [
   { label: "Main Character", desc: "The biggest story of the week, broken down without the noise." },
   { label: "The Soundtrack", desc: "Three songs picked to match the week's mood." },
-  { label: "Government", desc: "What's actually happening in government and policy, translated." },
-  { label: "Numbers We Can't Ignore", desc: "One stat worth knowing, explained in plain terms." },
+  { label: "The Paper Trail", desc: "One stat worth knowing, explained in plain terms." },
   { label: "Side Quests", desc: "Two smaller stories that don't need five minutes each." },
   { label: "Word Market", desc: "Big words from the week's news, decoded." },
   { label: "Rabbit Hole", desc: "Extra reads, watches, and listens for the curious." },
@@ -335,41 +335,9 @@ function Hero() {
           {COPY.ctaPrimary}
           <span aria-hidden className="text-xl transition-transform group-hover:translate-x-1">→</span>
         </a>
-        <Link
-          to="/latest"
-          className="text-sm font-semibold text-neutral-400 hover:text-white transition-colors underline underline-offset-4 decoration-white/20 hover:decoration-white/50"
-        >
-          Read Latest Issue →
-        </Link>
       </div>
       <p className="mt-4 text-xs text-neutral-500 font-medium">{COPY.fine}</p>
     </section>
-  );
-}
-
-function Ticker() {
-  const items = [...CURRENT_ISSUE.ticker, ...CURRENT_ISSUE.ticker];
-  const [paused, setPaused] = useState(false);
-  return (
-    <div
-      className="border-y border-white/10 bg-[var(--brand-blue)] py-3 overflow-hidden cursor-pointer select-none"
-      aria-hidden="true"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onTouchStart={() => setPaused((p) => !p)}
-    >
-      <div
-        className="flex w-max animate-ticker"
-        style={{ animationPlayState: paused ? "paused" : "running" }}
-      >
-        {items.map((item, i) => (
-          <span key={i} className="flex items-center whitespace-nowrap px-6 text-xs sm:text-sm font-semibold text-white">
-            {item}
-            <span className="ml-6 opacity-60">●</span>
-          </span>
-        ))}
-      </div>
-    </div>
   );
 }
 
@@ -426,24 +394,45 @@ function TranslatorDemo() {
               </p>
             </div>
 
-            <div className="mt-8 flex items-center justify-between">
-              <span
-                className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.15em] text-[var(--brand-orange)]"
-                style={{ fontFamily: "var(--font-mono)" }}
+            <div className="mt-8 grid grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-4">
+              <button
+                type="button"
+                onClick={() => setIndex((current) => (current - 1 + TRANSLATIONS.length) % TRANSLATIONS.length)}
+                aria-label="Show previous example"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/10 text-neutral-700 transition-colors hover:border-black/25 hover:bg-neutral-50"
               >
-                {item.tag}
-              </span>
-              <div className="flex items-center gap-2">
-                {TRANSLATIONS.map((_, i) => (
-                  <button
-                    type="button"
-                    key={i}
-                    onClick={() => setIndex(i)}
-                    aria-label={`Show example ${i + 1}`}
-                    className={`h-2 rounded-full transition-all ${i === index ? "w-6 bg-neutral-900" : "w-2 bg-neutral-300"}`}
-                  />
-                ))}
+                <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+              </button>
+              <div className="flex min-w-0 flex-col items-center gap-1">
+                <span
+                  className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.15em] text-[var(--brand-orange)]"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  {item.tag}
+                </span>
+                <div className="flex items-center gap-2">
+                  {TRANSLATIONS.map((_, i) => (
+                    <button
+                      type="button"
+                      key={i}
+                      onClick={() => setIndex(i)}
+                      aria-label={`Show example ${i + 1}`}
+                      aria-current={i === index ? "true" : undefined}
+                      className={`flex h-8 w-8 items-center justify-center rounded-full transition-colors ${i === index ? "bg-neutral-100" : "hover:bg-neutral-50"}`}
+                    >
+                      <span className={`h-2 rounded-full transition-all ${i === index ? "w-6 bg-neutral-900" : "w-2 bg-neutral-300"}`} />
+                    </button>
+                  ))}
+                </div>
               </div>
+              <button
+                type="button"
+                onClick={() => setIndex((current) => (current + 1) % TRANSLATIONS.length)}
+                aria-label="Show next example"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/10 text-neutral-700 transition-colors hover:border-black/25 hover:bg-neutral-50"
+              >
+                <ChevronRight className="h-5 w-5" aria-hidden="true" />
+              </button>
             </div>
           </div>
         </Reveal>
@@ -487,6 +476,35 @@ function LatestIssue() {
   );
 }
 
+function DossierStrip() {
+  return (
+    <section className="border-t border-black/10 bg-[var(--brand-orange)] text-neutral-950">
+      <div className="mx-auto flex max-w-5xl flex-col gap-5 px-6 py-7 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:py-8">
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-950/60" style={{ fontFamily: "var(--font-mono)" }}>
+            A quick side quest
+          </p>
+          <h2 className="mt-2 text-xl sm:text-2xl tracking-tight" style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}>
+            Take the Dossier
+          </h2>
+          <p className="mt-1 text-sm text-neutral-950/70">
+            A quick game about how Nigeria actually works.
+          </p>
+        </div>
+        <a
+          href="https://check.theoffscript.page"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border-2 border-neutral-950/80 px-5 py-3 text-sm font-bold transition-colors hover:bg-neutral-950 hover:text-[var(--brand-orange)] sm:w-auto sm:shrink-0"
+        >
+          Play now
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+  );
+}
+
 function SectionGuide() {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const [active, setActive] = useState(0);
@@ -507,7 +525,7 @@ function SectionGuide() {
   };
 
   return (
-    <section id="guide" className="border-t border-white/10 bg-black overflow-hidden">
+    <section id="guide" className="scroll-mt-16 sm:scroll-mt-20 border-t border-white/10 bg-black overflow-hidden">
       <div className="mx-auto max-w-5xl py-20">
         <Reveal className="max-w-lg mb-10 px-6">
           <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-neutral-400" style={{ fontFamily: "var(--font-mono)" }}>
@@ -589,7 +607,7 @@ function FormatIcon({ kind }: { kind: string }) {
 
 function FormatTimeline() {
   return (
-    <section id="how" className="border-t border-black/5 bg-[var(--brand-cream)] overflow-hidden">
+    <section id="how" className="scroll-mt-16 sm:scroll-mt-20 border-t border-black/5 bg-[var(--brand-cream)] overflow-hidden">
       <div className="mx-auto max-w-5xl py-20 px-6">
         <Reveal className="max-w-lg mb-12">
           <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500" style={{ fontFamily: "var(--font-mono)" }}>
@@ -672,7 +690,7 @@ function FounderTeaser() {
 
 function JoinBanner() {
   return (
-    <section id="join" className="border-t border-white/10 relative overflow-hidden bg-[var(--brand-blue-deep)]">
+    <section id="join" className="scroll-mt-16 sm:scroll-mt-20 border-t border-white/10 relative overflow-hidden bg-[var(--brand-blue-deep)]">
       <div
         className="absolute -right-24 top-1/2 w-[420px] h-[420px] rounded-full bg-[var(--brand-blue)] opacity-20 blur-[100px] pointer-events-none hidden md:block animate-float-y"
         aria-hidden="true"
@@ -849,9 +867,9 @@ export default function Index() {
       <main id="top" className="relative z-10 pt-14 sm:pt-16">
         <Hero />
         <span id="hero-end" aria-hidden="true" />
-        <Ticker />
         <TranslatorDemo />
         <LatestIssue />
+        <DossierStrip />
         <SectionGuide />
         <FormatTimeline />
         <FounderTeaser />

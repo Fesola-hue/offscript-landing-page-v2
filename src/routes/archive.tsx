@@ -54,6 +54,7 @@ export const Route = createFileRoute('/archive')({
 function ArchivePage() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showAllIssues, setShowAllIssues] = useState(false);
   const normalizedQuery = searchQuery.trim().toLowerCase().replace(/\bisuue\b/g, "issue");
   const issueNumberQuery = normalizedQuery.match(/^(?:issue|week)\s*0*(\d+)$/)?.[1];
   const filteredIssues = ISSUES.filter((issue) => {
@@ -67,6 +68,8 @@ function ArchivePage() {
       issue.featureStory.headline,
     ].join(" ").toLowerCase().includes(normalizedQuery);
   });
+  const shouldCollapse = !normalizedQuery && filteredIssues.length > 3;
+  const visibleIssues = shouldCollapse && !showAllIssues ? filteredIssues.slice(0, 3) : filteredIssues;
 
   return (
     <div className="min-h-screen bg-black text-white font-sans antialiased selection:bg-[var(--brand-blue)] selection:text-white">
@@ -144,7 +147,7 @@ function ArchivePage() {
         )}
 
         <div className="mt-10 sm:mt-12 flex flex-col gap-10 sm:gap-14">
-          {filteredIssues.map((issue, i) => {
+          {visibleIssues.map((issue, i) => {
             const dateLabel = issue.datePublished
               ? new Date(`${issue.datePublished}T00:00:00Z`).toLocaleDateString("en-US", {
                   year: "numeric",
@@ -212,6 +215,18 @@ function ArchivePage() {
             <p className="text-sm text-neutral-500">No issues found. Try a week, issue number, or headline fragment.</p>
           )}
         </div>
+
+        {shouldCollapse && (
+          <button
+            type="button"
+            onClick={() => setShowAllIssues((visible) => !visible)}
+            aria-expanded={showAllIssues}
+            className="mt-10 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold text-neutral-300 transition-colors hover:border-white/30 hover:text-white"
+          >
+            {showAllIssues ? "Show fewer issues" : "See more issues"}
+            <span aria-hidden="true">{showAllIssues ? "↑" : "↓"}</span>
+          </button>
+        )}
       </main>
 
       <footer className="border-t border-white/10">

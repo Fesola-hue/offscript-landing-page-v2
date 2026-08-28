@@ -41,6 +41,42 @@ export type Issue = {
 
 export const ISSUES: Issue[] = [
   {
+    number: "006",
+    week: "Week 6",
+    url: "https://preview.mailerlite.io/preview/2329743/emails/197033568954746022",
+
+    ticker: [
+      "NELFUND has disbursed ₦322bn across more than 1.6M loan applications",
+      "The Federal Government approved ₦540bn for the National Hospital and a new cancer institute",
+      "6,516 primary healthcare centres across Nigeria are currently non-functional",
+      "A ₦297bn road project is under construction between Ibadan and Ijebu-Ode",
+      "ASUU cleared 20 state universities to move toward strike over an unimplemented agreement",
+    ],
+
+    datePublished: "2026-08-28",
+    image: "/issues/issue-006-money.jpg",
+    featureStory: {
+      kicker: "This week's headline",
+      headline: "Nigeria Just Found Billions for Schools, Hospitals, and Roads. So Why Are 6,516 Clinics Still Empty?",
+      quote: "Nigeria announced billions for student loans, hospitals, cancer care, and roads this week. The money may be real, but an announcement and delivery are two different events, sometimes years apart.",
+      body: [
+        "This week, Nigeria put a lot of big numbers on the record. Billions redirected to student loans. Billions approved for hospitals. Billions more for a cancer institute. It's the kind of week that makes a great screenshot, gets forwarded to three WhatsApp groups, and feels like progress.",
+        "Here's the part the screenshot leaves out: announcing money and that money reaching you are two different events, sometimes years apart. Nigeria has funded things loudly and delivered them quietly, or not at all, before. This week showed both sides of that pattern within seven days.",
+        "President Tinubu has directed liquid, legally cleared funds recovered by the EFCC, along with unclaimed dividends in the Capital Market Trust Fund and money in the Dormant Accounts Trust Fund, into NELFUND. That's a genuinely new funding stream, not a reannouncement of old money, and it's meant to keep pace with demand. As of August 8, NELFUND had already disbursed more than ₦322 billion across over 1.6 million loan applications.",
+        "Worth remembering before you celebrate too hard: it's a loan. Every naira NELFUND pays out for you gets repaid later, on NELFUND's terms. More funding means more people can borrow their way through school. It does not mean school will get any cheaper.",
+        "In the same week, the Federal Executive Council approved nearly ₦540 billion for healthcare infrastructure, including a full upgrade of the National Hospital, Abuja. It also approved a separate ₦302.3 billion contract for a new National Institute for Cancer Research and Treatment, due for completion in 36 months.",
+        "Now put that beside this: according to the National Primary Health Care Development Agency, 6,516 primary healthcare centres across Nigeria are currently non-functional. These are the small local clinics meant to be your first stop for malaria, childbirth, or a bad fever. They have no staff, no drugs, broken equipment, or all three.",
+        "This is not just neglect; it has a paper trail. The Basic Health Care Provision Fund exists specifically to keep clinics like these running, but states have to provide 25% counterpart funding to unlock it, and most have not. Of Nigeria's more than 31,000 primary healthcare centres, only around 8,309 currently receive BHCPF support. The other 23,000-plus are not broke by accident. The money meant to fix them was never drawn down.",
+        "A flagship cancer institute in Abuja is a big deal, but it will not help the person in a rural ward whose nearest clinic has no one on duty today. Nigeria is investing heavily at one end of healthcare while the other end keeps quietly switching off.",
+        "The same tension is showing up in education. While NELFUND was getting a bigger war chest, ASUU cleared 20 state universities to move toward a strike over the unimplemented 2025 FGN-ASUU agreement. The deal, signed last December, promised lecturers a 40% salary increase and better pensions after 16 years of on-and-off negotiation. Ambrose Alli University in Edo did not wait: its lecturers began an indefinite strike on August 25 after a 14-day ultimatum over unpaid arrears expired.",
+        "Loan approvals going up while lecture halls go quiet is the same contradiction as the cancer institute and the empty clinic, just in a different uniform. More money to help you afford school. Less certainty that the school you're borrowing for will actually be in session.",
+        "The road story is the cleanest version of the pattern because it has a visible finish line. Construction is now underway on the 56.5-kilometre Ibadan-Ijebu-Ode road, a ₦297 billion project connecting Oyo and Ogun states, and it is scheduled to open in mid-2029. If it lands, traders, farmers, and daily commuters on that route will save real time and money. If it slips, as Nigerian road timelines often do, it becomes another announcement waiting for its delivery date.",
+        "None of these four stories is a lie. The money is real, and the approvals are real. What's unproven is the part that decides whether any of this changes your week: does the loan arrive before your fees are due, does your clinic get a nurse before you get sick, does your lecturer get paid before your semester ends, and does the road open before 2029 quietly becomes 2031?",
+        "Every one of these numbers sounds like it's for you. Whether it actually reaches you depends on delivery, not the announcement. Watch what opens, what stays staffed, and what stays open, not what gets a ribbon-cutting. Start with Tracka, BudgIT's citizen project tracker at tracka.ng: search the road, the hospital, or a project in your own state, and check the status it has actually logged, not just what the press release claims.",
+      ],
+    },
+  },
+  {
     number: "005",
     week: "Week 5",
      url: "https://preview.mailerlite.io/preview/2329743/emails/196349741143950658",
