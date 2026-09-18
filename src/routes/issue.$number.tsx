@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ISSUES } from "../data/issues";
 import { Wordmark } from "../components/Wordmark";
 import { MailerLiteForm } from "../components/MailerLiteForm";
+import { ReportingTrail } from "../components/ReportingTrail";
 
 // theoffscript.page/issue/002 (etc).
 //
@@ -42,11 +43,8 @@ export const Route = createFileRoute('/issue/$number')({
       { property: "og:url", content: url },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
-      { property: "og:image", content: "https://theoffscript.page/og-image.jpg" },
-      { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: title },
       { name: "twitter:description", content: description },
-      { name: "twitter:image", content: "https://theoffscript.page/og-image.jpg" },
     ];
 
     if (hasFullStory) {
@@ -62,14 +60,14 @@ export const Route = createFileRoute('/issue/$number')({
               "@type": "NewsArticle",
               headline: issue.featureStory.headline,
               description: issue.featureStory.quote,
-              image: ["https://theoffscript.page/og-image.jpg"],
+              image: ["https://theoffscript.page/og-image.png"],
               datePublished: issue.datePublished,
               dateModified: issue.datePublished,
               author: [{ "@type": "Person", name: "Aisha Onola", url: "https://aishaonola.me", jobTitle: "Founder & Editor" }],
               publisher: {
                 "@type": "NewsMediaOrganization",
                 name: "The OffScript",
-                logo: { "@type": "ImageObject", url: "https://theoffscript.page/favicon-512x512.png" },
+                logo: { "@type": "ImageObject", url: "https://theoffscript.page/logos/logo-blue-web.png" },
               },
               mainEntityOfPage: { "@type": "WebPage", "@id": url },
               isAccessibleForFree: true,
@@ -231,6 +229,8 @@ function FullStoryPage({ issue }: { issue: (typeof ISSUES)[number] }) {
             <p key={i}>{paragraph}</p>
           ))}
         </div>
+
+        <ReportingTrail sources={issue.featureStory.sources} />
 
         <div className="mt-14 border-t border-white/10 pt-8">
           {issue.url ? (

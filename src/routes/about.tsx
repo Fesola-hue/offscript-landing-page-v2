@@ -11,10 +11,10 @@ import {
 const FOUNDER_URL = "https://aishaonola.me";
 
 const BIO_PARAGRAPHS = [
-  "Aisha Onola is the founder and editor of The OffScript, a publication making news easier to understand, more relevant, and a little more enjoyable to keep up with.",
-  "She started The OffScript with a simple idea: staying informed shouldn't feel like a full-time job. She shapes the editorial direction, researches and edits every story, and decides what's actually worth your attention.",
-  "She's especially drawn to stories where business, tech, work, and culture intersect, especially when there's more to a headline than meets the eye.",
-  "Off the newsletter, she's usually building something, writing, or three tabs deep into a rabbit hole that started with one innocent Google search.",
+  "Aisha Onola is the founder and editor of The OffScript, a media project making news easier for young Nigerians to understand and keep up with.",
+  "She leads the editorial direction, audience growth, partnerships, and product decisions behind the publication, while also researching, writing, and editing its stories.",
+  "Her work sits around the intersection of media, technology, business, work, and culture, especially where everyday people are affected by bigger systems.",
+  "Outside The OffScript, she works across operations and product, helps turn ideas into clearer systems and useful projects, and is usually building or writing something of her own.",
 ];
 
 const FAQS: { q: string; a: string; id?: string }[] = [
@@ -70,8 +70,8 @@ const FAQS: { q: string; a: string; id?: string }[] = [
 export const Route = createFileRoute('/about')({
   component: AboutPage,
   head: () => {
-    const title = "About | The OffScript";
-    const description = "Meet the founder behind The OffScript, and answers to the questions people actually ask.";
+    const title = "Aisha Onola | Founder, Writer & Product-Minded Operator";
+    const description = "Aisha Onola is the founder and editor of The OffScript, working across media, operations and product. She leads editorial, audience growth, partnerships and product decisions while writing and building projects of her own.";
     const url = "https://theoffscript.page/about";
 
     const personSchema = {
@@ -79,9 +79,28 @@ export const Route = createFileRoute('/about')({
       "@type": "Person",
       name: "Aisha Onola",
       url: FOUNDER_URL,
-      jobTitle: "Founder & Editor",
+      description,
+      jobTitle: "Founder, Writer, Editor & Product-Minded Operator",
+      hasOccupation: [
+        { "@type": "Occupation", name: "Founder" },
+        { "@type": "Occupation", name: "Writer" },
+        { "@type": "Occupation", name: "Editor" },
+        { "@type": "Occupation", name: "Product-minded operator" },
+      ],
+      knowsAbout: ["media", "technology", "business", "operations", "product", "writing", "culture"],
       worksFor: { "@type": "NewsMediaOrganization", name: "The OffScript", url: "https://theoffscript.page" },
       sameAs: [FOUNDER_URL],
+    };
+
+    const aboutPageSchema = {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      name: title,
+      description,
+      url,
+      inLanguage: "en",
+      mainEntity: personSchema,
+      isPartOf: { "@type": "NewsMediaOrganization", name: "The OffScript", url: "https://theoffscript.page" },
     };
 
     const faqSchema = {
@@ -102,19 +121,19 @@ export const Route = createFileRoute('/about')({
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         { title },
+        { name: "author", content: "Aisha Onola" },
         { name: "description", content: description },
+        { name: "robots", content: "index, follow" },
         { property: "og:type", content: "website" },
         { property: "og:url", content: url },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
-        { property: "og:image", content: "https://theoffscript.page/og-image.jpg" },
-        { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: description },
-        { name: "twitter:image", content: "https://theoffscript.page/og-image.jpg" },
       ],
       links: [{ rel: "canonical", href: url }],
       scripts: [
+        { type: "application/ld+json", children: JSON.stringify(aboutPageSchema) },
         { type: "application/ld+json", children: JSON.stringify(personSchema) },
         { type: "application/ld+json", children: JSON.stringify(faqSchema) },
       ],
@@ -298,6 +317,7 @@ function AboutPage() {
 
       <footer className="border-t border-white/10">
         <div className="mx-auto max-w-6xl px-6 py-10 text-center text-[11px] text-neutral-500">
+          <Wordmark className="mb-4" />
           © {new Date().getFullYear()} The OffScript · Lagos · Worldwide
         </div>
       </footer>

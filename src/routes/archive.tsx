@@ -35,11 +35,8 @@ export const Route = createFileRoute('/archive')({
         { property: "og:url", content: "https://theoffscript.page/archive" },
         { property: "og:title", content: "Archive | The OffScript" },
         { property: "og:description", content: "Every past issue of The OffScript, all in one place." },
-        { property: "og:image", content: "https://theoffscript.page/og-image.jpg" },
-        { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: "Archive | The OffScript" },
         { name: "twitter:description", content: "Every past issue of The OffScript, all in one place." },
-        { name: "twitter:image", content: "https://theoffscript.page/og-image.jpg" },
       ],
       links: [
         { rel: "canonical", href: "https://theoffscript.page/archive" },
@@ -166,7 +163,7 @@ function ArchivePage() {
               >
                 <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-neutral-950">
                   <img
-                    src={issue.image ?? "/og-image.jpg"}
+                    src={issue.image ?? "/og-image.png"}
                     alt={issue.featureStory.headline}
                     className="w-full aspect-[16/10] object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     loading={i === 0 ? "eager" : "lazy"}
@@ -231,6 +228,7 @@ function ArchivePage() {
 
       <footer className="border-t border-white/10">
         <div className="mx-auto max-w-6xl px-6 py-10 text-center text-[11px] text-neutral-500">
+          <Wordmark className="mb-4" />
           © {new Date().getFullYear()} The OffScript · Lagos · Worldwide
         </div>
       </footer>

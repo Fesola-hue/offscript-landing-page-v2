@@ -14,7 +14,7 @@ export const Route = createFileRoute("/")({
       "name": "The OffScript",
       "alternateName": "OffScript",
       "url": "https://theoffscript.page",
-      "logo": "https://theoffscript.page/favicon-512x512.png",
+      "logo": "https://theoffscript.page/logos/logo-blue-web.png",
       "founder": {
         "@type": "Person",
         "name": "Aisha Onola",
@@ -49,12 +49,9 @@ export const Route = createFileRoute("/")({
         { property: "og:url", content: "https://theoffscript.page" },
         { property: "og:title", content: "The OffScript — Read less. Understand more." },
         { property: "og:description", content: "One weekly email cutting through Nigeria's noise. Politics, money, and culture, translated into what it actually means for you." },
-        { property: "og:image", content: "https://theoffscript.page/og-image.jpg" },
-        { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:site", content: "@theoffscriptfm" },
         { name: "twitter:title", content: "The OffScript — Read less. Understand more." },
         { name: "twitter:description", content: "Clear, plain-English context on Nigerian politics, money, and culture, delivered every Friday. Free forever." },
-        { name: "twitter:image", content: "https://theoffscript.page/og-image.jpg" },
       ],
       links: [
         { rel: "canonical", href: "https://theoffscript.page/" },
@@ -224,7 +221,7 @@ function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/80 border-b border-white/10">
       <nav className="mx-auto max-w-6xl px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-4" aria-label="Main Navigation">
         <a href="#top" className="text-lg sm:text-xl tracking-tight shrink-0" style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}>
-          <Wordmark />
+            <Wordmark />
         </a>
 
         {/* Full link set — desktop only */}
@@ -738,7 +735,7 @@ function Footer() {
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-[1.5fr_1fr_1fr_1fr] md:gap-8">
           <div className="col-span-2 max-w-sm md:col-span-1">
             <div className="text-xl tracking-tight" style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}>
-              <Wordmark />
+              <Wordmark onLight />
             </div>
             <p className="mt-4 text-sm leading-relaxed text-neutral-600">
               {COPY.footerDesc}

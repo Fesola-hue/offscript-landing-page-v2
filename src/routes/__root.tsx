@@ -74,6 +74,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "author", content: "The OffScript" },
+      { name: "theme-color", content: "#326BFA" },
       
       // --- STANDARD SEO ---
       { title: "The OffScript | Nigeria's News, Actually Explained" },
@@ -85,25 +86,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:url", content: "https://theoffscript.page" }, 
       { property: "og:title", content: "The OffScript — Read less. Understand more." },
       { property: "og:description", content: "No grammar. No recycled headlines. Just clear global and local updates for smart Nigerians, delivered every Friday." },
-      { property: "og:image", content: "https://theoffscript.page/og-image.jpg" }, 
+      { property: "og:image", content: "https://theoffscript.page/og-image.png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:alt", content: "The OffScript - Read less. Understand more." },
       
       // --- X / TWITTER CARDS ---
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@theoffscriptfm" },
       { name: "twitter:title", content: "The OffScript — Read less. Understand more." },
       { name: "twitter:description", content: "Clear global and local context for smart Nigerians, delivered every Friday." },
-      { name: "twitter:image", content: "https://theoffscript.page/og-image.jpg" },
+      { name: "twitter:image", content: "https://theoffscript.page/og-image.png" },
+      { name: "twitter:image:alt", content: "The OffScript - Read less. Understand more." },
     ],
     links: [
-      /* --- FAVICON: real hosted files, not a data URI. Google's favicon
-         crawler (Googlebot-Image) has to independently fetch this as a
-         file at a stable URL — an inline data: URI isn't fetchable, which
-         is why it worked in the browser tab but never showed in Search. --- */
-      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
-      { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
-      { rel: "icon", type: "image/png", sizes: "192x192", href: "/favicon-192x192.png" },
-      { rel: "shortcut icon", href: "/favicon.ico" },
-      { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+      { rel: "icon", href: "/favicon/favicon.ico", sizes: "any" },
+      { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon/favicon-32.png" },
+      { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon/favicon-16.png" },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/favicon/apple-touch-icon.png" },
+      { rel: "manifest", href: "/site.webmanifest" },
       /* --- REST OF YOUR APP LINKS --- */
       {
         rel: "stylesheet",
